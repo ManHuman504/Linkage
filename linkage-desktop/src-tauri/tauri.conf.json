@@ -27,9 +27,9 @@
   "plugins": {
     "updater": {
       "endpoints": [
-        "https://raw.githubusercontent.com/your-username/linkage/main/update.json"
+        "https://raw.githubusercontent.com/ManHuman504/Linkage/main/update.json"
       ],
-      "pubkey": "YOUR_PUBLIC_KEY_HERE"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlEOEU4RDI2RTA5MkJFN0EKUldSNnZwTGdKbzJPblNHMW4vNytJQXJxTTEyb3ZPRWtZQ1YvajJLcG1pWFBVamdrMFo5dWczK2cK"
     }
   },
   "bundle": {
