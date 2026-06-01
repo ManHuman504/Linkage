@@ -10,8 +10,13 @@
 </p>
 
 <p align="center">
+<<<<<<< HEAD
   <a href="https://github.com/ManHuman504/Linkage/releases">
     <img src="https://img.shields.io/github/v/release/ManHuman504/Linkage?include_prereleases&style=for-the-badge&color=indigo" alt="Latest Release">
+=======
+  <a href="https://github.com/ManHuman504/Linkage/releases/tag/v0.1.0">
+    <img src="https://img.shields.io/github/v/release/ManHuman504/Linkage?style=for-the-badge&color=indigo" alt="Latest Release">
+>>>>>>> 083b66350d04226c17638bdfa8432887239674ca
   </a>
   <a href="https://github.com/ManHuman504/Linkage/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/ManHuman504/Linkage?style=for-the-badge&color=slate" alt="License">
