@@ -1,5 +1,5 @@
 use axum::{
-    extract::State,
+    extract::{DefaultBodyLimit, State},
     http::{HeaderMap, StatusCode},
     response::{IntoResponse, Json},
     routing::{get, post},
@@ -197,7 +197,27 @@ pub async fn start_server(app_handle: AppHandle) {
     let frontend_dir = if cfg!(debug_assertions) {
         std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../dist")
     } else {
-        app_handle_fs.path().app_data_dir().unwrap().join("dist")
+        let base_res = app_handle_fs.path().resource_dir().unwrap();
+        
+        // Strategy: Look for index.html in several possible locations
+        let mut found_path = base_res.join("dist"); // Standard
+        
+        if !found_path.join("index.html").exists() {
+            // Check for the '_up_/dist' pattern (Tauri v2 parent dir resource)
+            let up_path = base_res.join("_up_").join("dist");
+            if up_path.join("index.html").exists() {
+                found_path = up_path;
+            } else {
+                // Check if it's nested in resources/resources/dist
+                let alt_path = base_res.join("resources").join("dist");
+                if alt_path.join("index.html").exists() {
+                    found_path = alt_path;
+                } else if base_res.join("index.html").exists() {
+                    found_path = base_res;
+                }
+            }
+        }
+        found_path
     };
 
     let app = Router::new()
@@ -211,13 +231,13 @@ pub async fn start_server(app_handle: AppHandle) {
         )
         .layer(layer)
         .layer(CorsLayer::permissive())
+        .layer(DefaultBodyLimit::disable())
         .layer(Extension(app_handle_fs))
         .with_state(state_fs);
 
     let mut port = 3000;
     let mut listener = None;
 
-    // Try binding to 3000, then fallback to 3001-3010 if needed
     for p in 3000..3011 {
         let addr = SocketAddr::from(([0, 0, 0, 0], p));
         match tokio::net::TcpListener::bind(addr).await {
@@ -232,7 +252,6 @@ pub async fn start_server(app_handle: AppHandle) {
 
     if let Some(listener) = listener {
         println!("🚀 Linkage Server running on http://0.0.0.0:{}", port);
-        // Update state with the actual port used
         {
             let port_state = app_handle.state::<Arc<Mutex<u16>>>();
             let mut server_port = port_state.lock().unwrap();
@@ -240,7 +259,7 @@ pub async fn start_server(app_handle: AppHandle) {
         }
         axum::serve(listener, app).await.unwrap();
     } else {
-        eprintln!("❌ CRITICAL: Could not bind to any port in range 3000-3010. Is another instance running?");
+        eprintln!("❌ CRITICAL: Could not bind to any port in range 3000-3010.");
     }
 }
 
@@ -281,13 +300,26 @@ async fn upload_file(
         &state.shared_dir
     };
 
-    while let Some(field) = multipart.next_field().await.unwrap() {
+    while let Ok(Some(mut field)) = multipart.next_field().await {
         if field.name().unwrap_or("") == "file" {
             let filename = field.file_name().unwrap_or("unknown_file").to_string();
-            let data = field.bytes().await.unwrap();
             let path = target_dir.join(&filename);
-            let mut file = File::create(path).await.unwrap();
-            file.write_all(&data).await.unwrap();
+            
+            let mut file = match File::create(&path).await {
+                Ok(f) => f,
+                Err(e) => {
+                    eprintln!("❌ Failed to create file {:?}: {}", path, e);
+                    continue;
+                }
+            };
+
+            // Stream the file content to disk in chunks
+            while let Ok(Some(chunk)) = field.chunk().await {
+                if let Err(e) = file.write_all(&chunk).await {
+                    eprintln!("❌ Error writing to file {:?}: {}", path, e);
+                    break;
+                }
+            }
 
             if is_phone {
                 let _ = app_handle.emit("file-received", &filename);
