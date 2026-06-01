@@ -72,6 +72,21 @@ Think of it as the **Apple Ecosystem experience for Windows**, but even more fle
 
 ---
 
+## 📖 How to Use
+
+1. Launch the app on your PC.
+2. Go to the **Connection** tab.
+3. Scan the QR code with your phone camera or enter the URL in your mobile browser.
+4. Enter the 4-digit PIN displayed on your PC screen.
+5. **Done!** Your devices are now linked.
+
+> 💡 **Pro Tips:**
+> - **Remembered Devices**: Once paired, your device is remembered automatically. You won't need to enter the PIN again unless you reset it. (You can manage or clear trusted devices anytime in the **Settings** tab).
+> - **Custom PIN**: You can change your pairing PIN in the settings for added security or convenience.
+> - **Quick Access**: For the best experience, use the **"Add to Home Screen"** feature in your mobile browser. This creates an icon on your phone that launches Linkage instantly like a native app.
+
+---
+
 ## 🚀 Getting Started
 
 ### Download the App
