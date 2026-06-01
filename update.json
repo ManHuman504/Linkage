@@ -1,10 +1,10 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "notes": "Initial release of Linkage Desktop.",
   "pub_date": "2026-06-01T12:00:00Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "",
+      "signature": "fsdf",
       "url": "https://github.com/ManHuman504/Linkage/releases/download/v0.1.0/Linkage_0.1.0_x64_en-US.msi.zip"
     }
   }
