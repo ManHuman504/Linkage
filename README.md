@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ManHuman504/Linkage/releases/latest">
+  <a href="https://github.com/ManHuman504/Linkage/releases/tag/v0.1.0">
     <img src="https://img.shields.io/github/v/release/ManHuman504/Linkage?style=for-the-badge&color=indigo" alt="Latest Release">
   </a>
   <a href="https://github.com/ManHuman504/Linkage/blob/main/LICENSE">
