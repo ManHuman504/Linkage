@@ -10,15 +10,15 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/ManHuman504/Linkage/releases">
-<img
+ <a href="https://github.com/ManHuman504/Linkage/releases">
+  <img
 src="https://img.shields.io/github/v/release/ManHuman504/Linkage?include_prereleases&style=for-the-badge&color=indi
 go" alt="Latest Release">
-</a>
-<a href="https://github.com/ManHuman504/Linkage/blob/main/LICENSE">
-<img src="https://img.shields.io/github/license/ManHuman504/Linkage?style=for-the-badge&color=slate"
+ </a>
+ <a href="https://github.com/ManHuman504/Linkage/blob/main/LICENSE">
+  <img src="https://img.shields.io/github/license/ManHuman504/Linkage?style=for-the-badge&color=slate"
 alt="License">
-</a>
+ </a>
 </p>
 
 ---
